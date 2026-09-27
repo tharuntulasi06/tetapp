@@ -1,0 +1,18 @@
+[
+  {
+    "id": "tet-q1",
+    "question": "Which article of the Indian Constitution deals with the Right to Education for children aged 6 to 14 years?",
+    "teluguQuestion": "6 నుండి 14 సంవత్సరాల పిల్లలకు ఉచిత నిర్బంధ విద్యా హక్కును తెలియజేసే రాజ్యాంగ ఆర్టికల్ ఏది?",
+    "options": [
+      "Article 21A (ఆర్టికల్ 21A)",
+      "Article 19 (ఆర్టికల్ 19)",
+      "Article 45 (ఆర్టికల్ 45)",
+      "Article 51 (ఆర్టికల్ 51)"
+    ],
+    "correctAnswer": "Article 21A (ఆర్టికల్ 21A)",
+    "explanation": "Article 21A was inserted by the 86th Constitutional Amendment Act in 2002 to make free and compulsory education a fundamental right.",
+    "teluguExplanation": "86వ రాజ్యాంగ సవరణ (2002) ద్వారా ఆర్టికల్ 21A ని ప్రాథమిక హక్కుగా చేర్చి 6-14 ఏళ్ల పిల్లలందరికీ విద్యా హక్కు కల్పించారు.",
+    "category": "Polity & Pedagogy",
+    "difficulty": "medium"
+  }
+]
