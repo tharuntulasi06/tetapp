@@ -123,13 +123,24 @@ export const PracticeScreen: React.FC<PracticeScreenProps> = ({
       {/* Top Header Bar */}
       <div className="bg-emerald-900 text-white rounded-3xl p-4 sm:p-6 shadow-md border border-emerald-800 space-y-4">
         <div className="flex items-center justify-between flex-wrap gap-3">
-          <div>
-            <span className="text-xs font-bold px-2.5 py-1 rounded-full bg-emerald-800 text-amber-300 border border-emerald-700">
-              {set.teluguTitle || set.title}
-            </span>
-            <h2 className="text-lg sm:text-2xl font-extrabold text-amber-100 mt-1">
-              ప్రశ్న {currentIndex + 1} / {set.totalQuestions}
-            </h2>
+          <div className="flex items-center gap-2.5">
+            <button
+              onClick={onNavigateHome}
+              className="p-2 rounded-xl bg-emerald-800 hover:bg-emerald-700 text-amber-300 border border-emerald-700 text-xs font-bold flex items-center gap-1 transition-colors shrink-0"
+              title="హోమ్ కి వెళ్లండి (Back to Home)"
+            >
+              <ChevronLeft className="w-4 h-4" />
+              <span className="hidden sm:inline">హోమ్</span>
+            </button>
+
+            <div>
+              <span className="text-[11px] sm:text-xs font-bold px-2.5 py-0.5 sm:py-1 rounded-full bg-emerald-800 text-amber-300 border border-emerald-700 inline-block truncate max-w-[200px] sm:max-w-none">
+                {set.teluguTitle || set.title}
+              </span>
+              <h2 className="text-base sm:text-2xl font-extrabold text-amber-100 mt-0.5">
+                ప్రశ్న {currentIndex + 1} / {set.totalQuestions}
+              </h2>
+            </div>
           </div>
 
           <div className="flex items-center gap-3">

@@ -52,6 +52,32 @@ export default function App() {
     }
   }, []);
 
+  // Browser & Mobile Hardware Back Button Listener
+  useEffect(() => {
+    if (typeof window !== 'undefined' && !window.history.state) {
+      window.history.replaceState({ screen: 'home' }, '', '#home');
+    }
+
+    const handlePopState = (event: PopStateEvent) => {
+      if (event.state && event.state.screen) {
+        setCurrentScreen(event.state.screen);
+      } else {
+        // Return to home screen when back button is pressed
+        setCurrentScreen('home');
+      }
+    };
+
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, []);
+
+  const navigateToScreen = (screen: 'home' | 'sets' | 'practice' | 'result' | 'review', pushHistory = true) => {
+    setCurrentScreen(screen);
+    if (pushHistory && typeof window !== 'undefined') {
+      window.history.pushState({ screen }, '', `#${screen}`);
+    }
+  };
+
   const handleToggleTextSize = () => {
     const nextSize = textSize === 'normal' ? 'large' : textSize === 'large' ? 'xlarge' : 'normal';
     setTextSize(nextSize);
@@ -66,7 +92,7 @@ export default function App() {
   const handleSelectSet = (set: PracticeSet) => {
     setActiveSet(set);
     setUserAnswers({});
-    setCurrentScreen('practice');
+    navigateToScreen('practice');
   };
 
   const handleSelectOption = (questionId: string, option: string) => {
@@ -111,14 +137,14 @@ export default function App() {
     setLastTimeTaken(timeTakenSeconds);
     localStorage.setItem('amma_mcq_attempts', JSON.stringify(updatedAttempts.slice(0, 50)));
 
-    setCurrentScreen('result');
+    navigateToScreen('result');
   };
 
   const handleReviewAttempt = (attempt: AttemptRecord) => {
     const targetSet = practiceSets.find((s) => s.id === attempt.setId) || activeSet || practiceSets[0];
     setActiveSet(targetSet);
     setUserAnswers(attempt.answers);
-    setCurrentScreen('review');
+    navigateToScreen('review');
   };
 
   const handleImportSet = (newSet: PracticeSet) => {
@@ -145,7 +171,7 @@ export default function App() {
       {/* Top Main Navigation Header */}
       <Header
         currentScreen={currentScreen}
-        onNavigateHome={() => setCurrentScreen('home')}
+        onNavigateHome={() => navigateToScreen('home')}
         textSize={textSize}
         onToggleTextSize={handleToggleTextSize}
         onOpenApiKeyModal={() => setIsApiKeyModalOpen(true)}
@@ -159,7 +185,7 @@ export default function App() {
             practiceSets={practiceSets}
             attempts={attempts}
             onSelectSet={handleSelectSet}
-            onNavigateToSets={() => setCurrentScreen('sets')}
+            onNavigateToSets={() => navigateToScreen('sets')}
             onReviewAttempt={handleReviewAttempt}
             onOpenImporter={() => setIsImporterOpen(true)}
             textSizeClass={getTextSizeClass()}
@@ -180,7 +206,7 @@ export default function App() {
             userAnswers={userAnswers}
             onSelectOption={handleSelectOption}
             onCompletePractice={handleCompletePractice}
-            onNavigateHome={() => setCurrentScreen('home')}
+            onNavigateHome={() => navigateToScreen('home')}
             userApiKey={userApiKey}
             textSizeClass={getTextSizeClass()}
           />
@@ -191,9 +217,9 @@ export default function App() {
             set={activeSet}
             userAnswers={userAnswers}
             timeTakenSeconds={lastTimeTaken}
-            onReviewAnswers={() => setCurrentScreen('review')}
+            onReviewAnswers={() => navigateToScreen('review')}
             onPracticeAgain={() => handleSelectSet(activeSet)}
-            onNavigateHome={() => setCurrentScreen('home')}
+            onNavigateHome={() => navigateToScreen('home')}
             textSizeClass={getTextSizeClass()}
           />
         )}
@@ -202,7 +228,7 @@ export default function App() {
           <ReviewScreen
             set={activeSet}
             userAnswers={userAnswers}
-            onNavigateHome={() => setCurrentScreen('home')}
+            onNavigateHome={() => navigateToScreen('home')}
             onPracticeAgain={() => handleSelectSet(activeSet)}
             userApiKey={userApiKey}
             textSizeClass={getTextSizeClass()}
